@@ -1,0 +1,12 @@
+node_modules/
+.env
+build/
+dist/
+.DS_Store
+*.log
+__pycache__/
+.venv/
+env/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/

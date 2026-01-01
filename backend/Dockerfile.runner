@@ -1,0 +1,10 @@
+# Dockerfile for the test runner
+FROM node:18-slim
+
+WORKDIR /app
+
+# In a real scenario, we would copy test files here
+# For simulation, we just have a script that "runs" a test
+COPY runner.js .
+
+ENTRYPOINT ["node", "runner.js"]
