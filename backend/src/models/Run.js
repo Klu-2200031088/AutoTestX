@@ -6,6 +6,10 @@ const RunSchema = new mongoose.Schema({
     failedCount: Number,
     duration: Number, // total execution time in ms
     executionMode: String,
+    runnerType: String,
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
+    commitId: String,
+    branch: String,
     results: [
         {
             testId: { type: mongoose.Schema.Types.ObjectId, ref: 'Test' },
@@ -13,7 +17,9 @@ const RunSchema = new mongoose.Schema({
             status: String,
             orderIndex: Number,
             duration: Number, // duration per test
-            logs: String // simulated logs
+            riskScore: Number,
+            logs: String,
+            metadata: { type: Map, of: String }
         }
     ],
     runAt: { type: Date, default: Date.now }

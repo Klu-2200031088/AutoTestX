@@ -23,10 +23,14 @@ const testRoutes = require('./routes/tests');
 const authRoutes = require('./routes/auth');
 const executeRoutes = require('./routes/execute');
 const aiRoutes = require('./routes/ai');
+const configRoutes = require('./routes/config');
+const projectRoutes = require('./routes/projects');
 app.use('/api/tests', testRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/execute', executeRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/config', configRoutes);
+app.use('/api/projects', projectRoutes);
 
 app.get('/', (req, res) => res.send('AutoTestX backend running'));
 

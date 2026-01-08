@@ -1,0 +1,40 @@
+name: AutoTestX CI Trigger
+
+# This workflow triggers the AutoTestX Intelligent Testing Pipeline on every push.
+# To use this: 
+# 1. Add your Project ID from the AutoTestX Dashboard to your GitHub Secrets as 'AUTOTESTX_PROJECT_ID'
+# 2. Update the 'AUTOTESTX_API_URL' below to your instance URL.
+
+on:
+  push:
+    branches: [ "**" ] # Trigger on every branch push
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  autotestx-sync:
+    name: Intelligent Test Orchestration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Trigger Orchestration Engine
+        env:
+          AUTOTESTX_PROJECT_ID: ${{ secrets.AUTOTESTX_PROJECT_ID }}
+          AUTOTESTX_API_URL: "https://api.autotestx.io/api" # Replace with your instance URL
+        run: |
+          # 1. Fetch the lightweight CI bridge script
+          curl -sSL https://raw.githubusercontent.com/autotestx/AutoTestX/main/scripts/autotestx-ci.js -o trigger.js
+          
+          # 2. Install minimal dependencies
+          npm install axios
+          
+          # 3. Handover to AutoTestX Intelligence Layer
+          # This will wait for the execution results and exit with code 1 if tests fail
+          node trigger.js
